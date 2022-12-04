@@ -9,7 +9,7 @@ import AllMeetupsPage from "./pages/AllMeetups";
 function App() {
   return (
     <Switch>
-      <Route path="/" exact>
+      <Route path="/retail-management" exact>
         <WelcomePage />
       </Route>
       <Layout>
