@@ -26,6 +26,28 @@
   margin-left: 3rem;
 }
 
+nav {
+  display: flex;
+}
+
+.header button {
+  background-color: #cc2062;
+  color: white;
+  border-radius: 12px;
+  padding: 0 1rem;
+  margin-left: 15rem;
+  border-color: #77002e;
+  border-style: solid;
+}
+
+button:hover {
+  background-color: #b00848;
+}
+
+button:active {
+  background-color: #8a0739;
+}
+
 .header a {
   text-decoration: none;
   font-size: 1.5rem;
