@@ -13,7 +13,7 @@ function MainNavigation() {
       <nav>
         <ul>
           <li>
-            <Link to='/'>Product List</Link>
+            <Link to='/all-meetups'>Product List</Link>
           </li>
           <li>
             <Link to='/new-meetup'>Add New Item</Link>

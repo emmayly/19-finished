@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/retail-management/static/css/main.5a31b2a7.css",
+    "main.js": "/retail-management/static/js/main.98c3a0a4.js",
+    "index.html": "/retail-management/index.html",
+    "main.5a31b2a7.css.map": "/retail-management/static/css/main.5a31b2a7.css.map",
+    "main.98c3a0a4.js.map": "/retail-management/static/js/main.98c3a0a4.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.5a31b2a7.css",
+    "static/js/main.98c3a0a4.js"
+  ]
+}
