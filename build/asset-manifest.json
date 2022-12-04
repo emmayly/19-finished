@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/static/css/main.5a31b2a7.css",
-    "main.js": "/static/js/main.cab6885d.js",
-    "index.html": "/index.html",
-    "main.5a31b2a7.css.map": "/static/css/main.5a31b2a7.css.map",
-    "main.cab6885d.js.map": "/static/js/main.cab6885d.js.map"
+    "main.css": "/retail-management/static/css/main.5a31b2a7.css",
+    "main.js": "/retail-management/static/js/main.796e55fb.js",
+    "index.html": "/retail-management/index.html",
+    "main.5a31b2a7.css.map": "/retail-management/static/css/main.5a31b2a7.css.map",
+    "main.796e55fb.js.map": "/retail-management/static/js/main.796e55fb.js.map"
   },
   "entrypoints": [
     "static/css/main.5a31b2a7.css",
-    "static/js/main.cab6885d.js"
+    "static/js/main.796e55fb.js"
   ]
 }
