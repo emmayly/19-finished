@@ -1,13 +1,10 @@
-import { useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase.js";
 
 import classes from "./MainNavigation.module.css";
-import FavoritesContext from "../../store/favorites-context";
 
 function MainNavigation() {
-  const favoritesCtx = useContext(FavoritesContext);
   const history = useHistory();
 
   const SignOutHandler = () => {
@@ -30,14 +27,6 @@ function MainNavigation() {
           </li>
           <li>
             <Link to="/new-meetup">Add New Item</Link>
-          </li>
-          <li>
-            <Link to="/favorites">
-              My Favorites
-              <span className={classes.badge}>
-                {favoritesCtx.totalFavorites}
-              </span>
-            </Link>
           </li>
         </ul>
         <button onClick={SignOutHandler}>Sign Out</button>
