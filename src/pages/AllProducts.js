@@ -50,7 +50,7 @@ function AllProductsPage() {
         );
       })
       .then(() => {
-        setDeleteProduct(!DeleteProduct);
+        setDeleteProduct(!deleteProduct);
       });
   }
 
