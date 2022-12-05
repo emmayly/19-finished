@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
 import {
   signInWithEmailAndPassword,
-  onAuthStateChanged,
   createUserWithEmailAndPassword,
 } from "firebase/auth";
 import { auth } from "../firebase.js";
 import { useHistory } from "react-router-dom";
 
-import AllMeetupsPage from "./AllMeetups";
 import SignIn from "../components/layout/SignIn.js";
 
 function WelcomePage() {
@@ -26,7 +24,7 @@ function WelcomePage() {
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
-        history.replace("/all-meetups");
+        history.replace("/all-products");
       }
     });
   }, []);
@@ -42,7 +40,7 @@ function WelcomePage() {
   const handleSignIn = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then(() => {
-        history.replace("/all-meetups");
+        history.replace("/all-products");
       })
       .catch((err) => alert(err.message));
   };
@@ -63,7 +61,7 @@ function WelcomePage() {
       registerInformation.password
     )
       .then(() => {
-        history.replace("/all-meetups");
+        history.replace("/all-products");
       })
       .catch((err) => alert(err.message));
   };

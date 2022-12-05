@@ -40,11 +40,11 @@ nav {
   border-style: solid;
 }
 
-button:hover {
+.header button:hover {
   background-color: #b00848;
 }
 
-button:active {
+.header button:active {
   background-color: #8a0739;
 }
 

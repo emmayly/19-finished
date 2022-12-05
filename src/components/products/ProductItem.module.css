@@ -44,3 +44,11 @@
 .actions button:active {
   background-color: #ffe2ed;
 }
+
+.edit {
+  margin-left: 14rem;
+}
+
+.delete {
+  margin-left: 8rem;
+}

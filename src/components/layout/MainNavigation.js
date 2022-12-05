@@ -23,10 +23,10 @@ function MainNavigation() {
       <nav>
         <ul>
           <li>
-            <Link to="/all-meetups">Product List</Link>
+            <Link to="/all-products">Product List</Link>
           </li>
           <li>
-            <Link to="/new-meetup">Add New Item</Link>
+            <Link to="/new-product">Add New Item</Link>
           </li>
         </ul>
         <button onClick={SignOutHandler}>Sign Out</button>

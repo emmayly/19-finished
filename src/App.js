@@ -1,9 +1,9 @@
 import { Route, Switch } from "react-router-dom";
 
 import WelcomePage from "./pages/welcome";
-import NewMeetupPage from "./pages/NewMeetup";
+import NewProductPage from "./pages/NewProduct";
 import Layout from "./components/layout/Layout";
-import AllMeetupsPage from "./pages/AllMeetups";
+import AllProductsPage from "./pages/AllProducts";
 
 function App() {
   return (
@@ -12,11 +12,11 @@ function App() {
         <WelcomePage />
       </Route>
       <Layout>
-        <Route path="/all-meetups" exact>
-          <AllMeetupsPage />
+        <Route path="/all-products" exact>
+          <AllProductsPage />
         </Route>
-        <Route path="/new-meetup" exact>
-          <NewMeetupPage />
+        <Route path="/new-product" exact>
+          <NewProductPage />
         </Route>
       </Layout>
     </Switch>
