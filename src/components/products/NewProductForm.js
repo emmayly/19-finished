@@ -68,7 +68,7 @@ function NewProductForm(props) {
         </div>
         <div className={classes.control}>
           <label htmlFor="quantity">Quantity</label>
-          <input type="number" required id="quantity" ref={quantityInputRef} />
+          <input type="number" required id="quantity" ref={quantityInputRef} min="0"/>
         </div>
         <div className={classes.actions}>
           <button>Add Product</button>

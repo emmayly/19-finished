@@ -6,7 +6,7 @@ import ProductList from "../components/products/ProductList";
 function AllProductsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [loadedProducts, setLoadedProducts] = useState([]);
-  const [deleteProduct, setDeleteProduct] = useState(true);
+  const [reload, setReload] = useState(true);
 
   useEffect(() => {
     setIsLoading(true);
@@ -33,7 +33,7 @@ function AllProductsPage() {
           setLoadedProducts(products);
         });
     });
-  }, [deleteProduct]);
+  }, [reload]);
 
   function DeleteProduct(productId) {
     auth.currentUser
@@ -50,7 +50,27 @@ function AllProductsPage() {
         );
       })
       .then(() => {
-        setDeleteProduct(!deleteProduct);
+        setReload(!reload);
+      });
+  }
+
+  function changeQuantity(productId, quantity) {
+    auth.currentUser
+      .getIdToken(true)
+      .then((idToken) => {
+        fetch(
+          `https://retail-management-ccd0b-default-rtdb.firebaseio.com//products/${productId}.json?auth=${idToken}`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ quantity: `${quantity}` }),
+          }
+        );
+      })
+      .then(() => {
+        setReload(!reload);
       });
   }
 
@@ -65,7 +85,11 @@ function AllProductsPage() {
   return (
     <section>
       <h1>Available Products</h1>
-      <ProductList products={loadedProducts} onDeleteProduct={DeleteProduct} />
+      <ProductList
+        products={loadedProducts}
+        onDeleteProduct={DeleteProduct}
+        changeQuantity={changeQuantity}
+      />
     </section>
   );
 }
