@@ -24,4 +24,5 @@ input[type=number] {
 
 .counterButton {
     font-size: larger;
+    width: 28px;
 }
