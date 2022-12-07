@@ -4,16 +4,25 @@ import Popup from "../layout/Popup";
 import Backdrop from "../layout/Backdrop";
 import Card from "../ui/Card";
 import Counter from "../Counter";
+import NewProductForm from "./NewProductForm";
 import classes from "./ProductItem.module.css";
 
 function ProductItem(props) {
   const [showPopup, setShowPopup] = useState();
+  const [onEdit, setOnEdit] = useState();
   function showPopupHandler(productId) {
     setShowPopup(true);
   }
   function closePopupHandler(productId) {
     setShowPopup(false);
   }
+  function showEditHandler(productId) {
+    setOnEdit(true);
+  }
+  function closeEditHandler(productId) {
+    setOnEdit(false);
+  }
+
 
   var currentQuantity = Number(props.quantity);
 
@@ -52,7 +61,9 @@ function ProductItem(props) {
             </div>
           </div>
           <div className={classes.actions}>
-            <button className={classes.edit}>Edit</button>
+            <button className={classes.edit} onClick={showEditHandler}>
+              Edit
+            </button>
             <button className={classes.delete} onClick={showPopupHandler}>
               Delete
             </button>
@@ -60,6 +71,7 @@ function ProductItem(props) {
         </Card>
       </li>
       {showPopup && <Backdrop onClick={closePopupHandler} />}
+      {onEdit && <Backdrop onClick={closeEditHandler} />}
       {showPopup && (
         <Popup
           text="Are you sure?"
@@ -68,6 +80,7 @@ function ProductItem(props) {
           productId={props.id}
         />
       )}
+      {onEdit && <NewProductForm closeEditHandler={closeEditHandler}/>}
     </div>
   );
 }

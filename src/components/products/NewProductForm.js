@@ -31,11 +31,13 @@ function NewProductForm(props) {
     };
 
     props.onAddProduct(productData);
+    props.onClose();
   }
+  
 
   return (
     <Card>
-      <form className={classes.form} onSubmit={submitHandler}>
+      <form className={classes.form}>
         <div className={classes.control}>
           <label htmlFor="name">Product Name</label>
           <input type="text" required id="name" ref={nameInputRef} />
@@ -68,10 +70,27 @@ function NewProductForm(props) {
         </div>
         <div className={classes.control}>
           <label htmlFor="quantity">Quantity</label>
-          <input type="number" required id="quantity" ref={quantityInputRef} min="0"/>
+          <input
+            type="number"
+            required
+            id="quantity"
+            ref={quantityInputRef}
+            min="0"
+          />
         </div>
         <div className={classes.actions}>
-          <button>Add Product</button>
+          <button
+            className={[classes.btn, classes.btn_alt].join(" ")}
+            onClick={props.closeEditHandler}
+          >
+            Cancel
+          </button>
+          <button
+            className={classes.btn}
+            onClick={submitHandler}
+          >
+            Save
+          </button>
         </div>
       </form>
     </Card>
