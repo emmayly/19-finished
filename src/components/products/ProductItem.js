@@ -80,7 +80,19 @@ function ProductItem(props) {
           productId={props.id}
         />
       )}
-      {onEdit && <NewProductForm closeEditHandler={closeEditHandler}/>}
+      {onEdit && (
+        <NewProductForm
+          onClose={closeEditHandler}
+          name={props.name}
+          purchasePrice={props.purchasePrice}
+          salePrice={props.salePrice}
+          image={props.image}
+          quantity={props.quantity}
+          description={props.description}
+          id={props.id}
+          method="PUT"
+        />
+      )}
     </div>
   );
 }

@@ -2,6 +2,8 @@ import { useRef } from "react";
 
 import Card from "../ui/Card";
 import classes from "./NewProductForm.module.css";
+import { useHistory } from "react-router-dom";
+import { auth } from "../../firebase";
 
 function NewProductForm(props) {
   const nameInputRef = useRef();
@@ -10,7 +12,7 @@ function NewProductForm(props) {
   const salePriceInputRef = useRef();
   const quantityInputRef = useRef();
   const descriptionInputRef = useRef();
-
+  const history = useHistory();
   function submitHandler(event) {
     event.preventDefault();
 
@@ -30,8 +32,28 @@ function NewProductForm(props) {
       description: enteredDescription,
     };
 
-    props.onAddProduct(productData);
+    addProductHandler(productData,props.id,props.method);
     props.onClose();
+  }
+
+  function addProductHandler(productData, productId, updateMethod) {
+    auth.currentUser
+      .getIdToken(true)
+      .then((idToken) => {
+        fetch(
+          `https://retail-management-ccd0b-default-rtdb.firebaseio.com//products/${productId}.json?auth=${idToken}`,
+          {
+            method: updateMethod,
+            body: JSON.stringify(productData),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+      })
+      .then(() => {
+        history.replace("/all-products");
+      });
   }
   
 
@@ -40,11 +62,23 @@ function NewProductForm(props) {
       <form className={classes.form}>
         <div className={classes.control}>
           <label htmlFor="name">Product Name</label>
-          <input type="text" required id="name" ref={nameInputRef} />
+          <input
+            type="text"
+            defaultValue={props.name}
+            required
+            id="name"
+            ref={nameInputRef}
+          />
         </div>
         <div className={classes.control}>
           <label htmlFor="image">Product Image</label>
-          <input type="url" required id="image" ref={imageInputRef} />
+          <input
+            type="url"
+            defaultValue={props.image}
+            required
+            id="image"
+            ref={imageInputRef}
+          />
         </div>
         <div className={classes.control}>
           <label htmlFor="purchasePrice">Purchase Price</label>
@@ -52,12 +86,19 @@ function NewProductForm(props) {
             type="text"
             required
             id="purchasePrice"
+            defaultValue={props.purchasePrice}
             ref={purchasePriceInputRef}
           />
         </div>
         <div className={classes.control}>
           <label htmlFor="salePrice">Sale Price</label>
-          <input type="text" required id="salePrice" ref={salePriceInputRef} />
+          <input
+            type="text"
+            required
+            defaultValue={props.salePrice}
+            id="salePrice"
+            ref={salePriceInputRef}
+          />
         </div>
         <div className={classes.control}>
           <label htmlFor="description">Description</label>
@@ -65,6 +106,7 @@ function NewProductForm(props) {
             id="description"
             required
             rows="5"
+            defaultValue={props.description}
             ref={descriptionInputRef}
           ></textarea>
         </div>
@@ -74,6 +116,7 @@ function NewProductForm(props) {
             type="number"
             required
             id="quantity"
+            defaultValue={props.quantity}
             ref={quantityInputRef}
             min="0"
           />
@@ -81,14 +124,11 @@ function NewProductForm(props) {
         <div className={classes.actions}>
           <button
             className={[classes.btn, classes.btn_alt].join(" ")}
-            onClick={props.closeEditHandler}
+            onClick={props.onClose}
           >
             Cancel
           </button>
-          <button
-            className={classes.btn}
-            onClick={submitHandler}
-          >
+          <button className={classes.btn} onClick={submitHandler}>
             Save
           </button>
         </div>
