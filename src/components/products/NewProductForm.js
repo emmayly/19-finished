@@ -2,8 +2,6 @@ import { useRef } from "react";
 
 import Card from "../ui/Card";
 import classes from "./NewProductForm.module.css";
-import { useHistory } from "react-router-dom";
-import { auth } from "../../firebase";
 
 function NewProductForm(props) {
   const nameInputRef = useRef();
@@ -12,7 +10,6 @@ function NewProductForm(props) {
   const salePriceInputRef = useRef();
   const quantityInputRef = useRef();
   const descriptionInputRef = useRef();
-  const history = useHistory();
   function submitHandler(event) {
     event.preventDefault();
 
@@ -32,30 +29,10 @@ function NewProductForm(props) {
       description: enteredDescription,
     };
 
-    addProductHandler(productData,props.id,props.method);
+    props.updateForm(productData,props.id,props.method);
     props.onClose();
   }
 
-  function addProductHandler(productData, productId, updateMethod) {
-    auth.currentUser
-      .getIdToken(true)
-      .then((idToken) => {
-        fetch(
-          `https://retail-management-ccd0b-default-rtdb.firebaseio.com//products/${productId}.json?auth=${idToken}`,
-          {
-            method: updateMethod,
-            body: JSON.stringify(productData),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-      })
-      .then(() => {
-        history.replace("/all-products");
-      });
-  }
-  
 
   return (
     <Card>

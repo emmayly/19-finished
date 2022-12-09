@@ -16,6 +16,7 @@ function ProductList(props) {
           description={product.description}
           onDelete={props.onDeleteProduct}
           changeQuantity={props.changeQuantity}
+          updateForm={props.updateForm}
         />
       ))}
     </ul>

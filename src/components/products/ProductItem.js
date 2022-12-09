@@ -91,6 +91,7 @@ function ProductItem(props) {
           description={props.description}
           id={props.id}
           method="PUT"
+          updateForm={props.updateForm}
         />
       )}
     </div>
