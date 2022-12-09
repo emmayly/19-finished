@@ -1,0 +1,25 @@
+.title {
+    display: flex;
+    align-items: center;
+}
+
+.addButton {
+    font-size:xx-large;
+    width: 60px;
+    height: 60px;
+    margin-left: 5rem;
+    border-radius: 5rem;
+    border: none;
+    background-color: #cc2062;
+    color: white;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.title button:hover {
+  background-color: #b00848;
+}
+
+.title button:active {
+  background-color: #8a0739;
+}

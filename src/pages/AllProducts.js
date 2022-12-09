@@ -4,6 +4,7 @@ import { auth } from "../firebase";
 import ProductList from "../components/products/ProductList";
 import Backdrop from "../components/layout/Backdrop";
 import NewProductForm from "../components/products/NewProductForm";
+import classes from "./AllProduct.module.css";
 
 function AllProductsPage() {
   const [isLoading, setIsLoading] = useState(true);
@@ -84,23 +85,23 @@ function AllProductsPage() {
   }
 
   function updateForm(productData, productId, updateMethod) {
-      auth.currentUser
-        .getIdToken(true)
-        .then((idToken) => {
-          fetch(
-            `https://retail-management-ccd0b-default-rtdb.firebaseio.com//products/${productId}.json?auth=${idToken}`,
-            {
-              method: updateMethod,
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(productData),
-            }
-          );
-        })
-        .then(() => {
-          setReload(!reload);
-        });
+    auth.currentUser
+      .getIdToken(true)
+      .then((idToken) => {
+        fetch(
+          `https://retail-management-ccd0b-default-rtdb.firebaseio.com//products/${productId}.json?auth=${idToken}`,
+          {
+            method: updateMethod,
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(productData),
+          }
+        );
+      })
+      .then(() => {
+        setReload(!reload);
+      });
   }
 
   if (isLoading) {
@@ -113,11 +114,11 @@ function AllProductsPage() {
 
   return (
     <section>
-      <h1>Available Products</h1>
+      <div className={classes.title}>
+        <h1>Available Products</h1>
+        <button onClick={showAddNewHandler} className={classes.addButton}>+</button>
+      </div>
       <div>
-        <button onClick={showAddNewHandler}>
-          Add New Item
-        </button>
         {addNew && <Backdrop onClick={closeAddNewHandler} />}
         {addNew && (
           <NewProductForm

@@ -36,7 +36,7 @@ function NewProductForm(props) {
 
   return (
     <Card>
-      <form className={classes.form}>
+      <form className={classes.form} onSubmit={submitHandler}>
         <div className={classes.control}>
           <label htmlFor="name">Product Name</label>
           <input
@@ -105,9 +105,7 @@ function NewProductForm(props) {
           >
             Cancel
           </button>
-          <button className={classes.btn} onClick={submitHandler}>
-            Save
-          </button>
+          <button className={classes.btn}>Save</button>
         </div>
       </form>
     </Card>

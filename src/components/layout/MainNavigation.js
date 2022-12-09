@@ -25,9 +25,6 @@ function MainNavigation() {
           <li>
             <Link to="/all-products">Product List</Link>
           </li>
-          <li>
-            <Link to="/new-product">Add New Item</Link>
-          </li>
         </ul>
         <button onClick={SignOutHandler}>Sign Out</button>
       </nav>
