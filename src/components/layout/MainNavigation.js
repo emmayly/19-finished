@@ -21,11 +21,6 @@ function MainNavigation() {
     <header className={classes.header}>
       <div className={classes.logo}>Retail Management</div>
       <nav>
-        <ul>
-          <li>
-            <Link to="/all-products">Product List</Link>
-          </li>
-        </ul>
         <button onClick={SignOutHandler}>Sign Out</button>
       </nav>
     </header>

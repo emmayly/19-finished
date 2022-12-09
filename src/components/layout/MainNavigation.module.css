@@ -32,10 +32,11 @@ nav {
 
 .header button {
   background-color: #cc2062;
+  height: 2rem;
   color: white;
-  border-radius: 12px;
+  border-radius: 7px;
   padding: 0 1rem;
-  margin-left: 15rem;
+  margin-left: 1rem;
   border-color: #77002e;
   border-style: solid;
 }
