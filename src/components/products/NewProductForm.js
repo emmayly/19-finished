@@ -1,4 +1,7 @@
-import { useRef } from "react";
+import { useRef, useState, useCallback } from "react";
+import Dropzone from "../DropZone";
+import ImageGrid from "../ImageGrid";
+import cuid from "cuid";
 
 import Card from "../ui/Card";
 import classes from "./NewProductForm.module.css";
@@ -10,6 +13,8 @@ function NewProductForm(props) {
   const salePriceInputRef = useRef();
   const quantityInputRef = useRef();
   const descriptionInputRef = useRef();
+  const [images, setImages] = useState([]);
+
   function submitHandler(event) {
     event.preventDefault();
 
@@ -29,10 +34,23 @@ function NewProductForm(props) {
       description: enteredDescription,
     };
 
-    props.updateForm(productData,props.id,props.method);
+    props.updateForm(productData, props.id, props.method);
     props.onClose();
   }
 
+  const onDrop = useCallback((acceptedFiles) => {
+    acceptedFiles.map((file) => {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        setImages((prevState) => [
+          ...prevState,
+          { id: cuid(), src: e.target.result },
+        ]);
+      };
+      reader.readAsDataURL(file);
+      return file;
+    });
+  }, []);
 
   return (
     <Card>
@@ -49,10 +67,11 @@ function NewProductForm(props) {
         </div>
         <div className={classes.control}>
           <label htmlFor="image">Product Image</label>
-          <input
-            type="url"
+          <Dropzone
+            onDrop={onDrop}
+            accept={"image/*"}
+            type="file"
             defaultValue={props.image}
-            required
             id="image"
             ref={imageInputRef}
           />
