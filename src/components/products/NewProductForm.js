@@ -1,14 +1,11 @@
 import { useRef, useState, useCallback } from "react";
 import Dropzone from "../DropZone";
-import ImageGrid from "../ImageGrid";
-import cuid from "cuid";
 
 import Card from "../ui/Card";
 import classes from "./NewProductForm.module.css";
 
 function NewProductForm(props) {
   const nameInputRef = useRef();
-  const imageInputRef = useRef();
   const purchasePriceInputRef = useRef();
   const salePriceInputRef = useRef();
   const quantityInputRef = useRef();
@@ -19,7 +16,8 @@ function NewProductForm(props) {
     event.preventDefault();
 
     const enteredName = nameInputRef.current.value;
-    const enteredImage = imageInputRef.current.value;
+    const imageURL = onDrop();
+    console.log({ imageURL });
     const enteredPurchasePrice = purchasePriceInputRef.current.value;
     const enteredSalePrice = salePriceInputRef.current.value;
     const enteredQuantity = quantityInputRef.current.value;
@@ -27,7 +25,7 @@ function NewProductForm(props) {
 
     const productData = {
       name: enteredName,
-      image: enteredImage,
+      image: imageURL,
       purchasePrice: enteredPurchasePrice,
       salePrice: enteredSalePrice,
       quantity: enteredQuantity,
@@ -39,17 +37,8 @@ function NewProductForm(props) {
   }
 
   const onDrop = useCallback((acceptedFiles) => {
-    acceptedFiles.map((file) => {
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        setImages((prevState) => [
-          ...prevState,
-          { id: cuid(), src: e.target.result },
-        ]);
-      };
-      reader.readAsDataURL(file);
-      return file;
-    });
+    // upload file
+    // return url
   }, []);
 
   return (
@@ -73,7 +62,6 @@ function NewProductForm(props) {
             type="file"
             defaultValue={props.image}
             id="image"
-            ref={imageInputRef}
           />
         </div>
         <div className={classes.control}>

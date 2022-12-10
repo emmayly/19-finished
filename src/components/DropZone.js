@@ -7,6 +7,7 @@ function Dropzone({ onDrop, accept, open }) {
     useDropzone({
       accept,
       onDrop,
+      multiple: false
     });
   const files = acceptedFiles.map((file) => (
     <li key={file.path}>
