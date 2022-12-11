@@ -18,6 +18,7 @@ function ProductItem(props) {
   }
   function showEditHandler(productId) {
     setOnEdit(true);
+    window.scrollTo(0,0);
   }
   function closeEditHandler(productId) {
     setOnEdit(false);
