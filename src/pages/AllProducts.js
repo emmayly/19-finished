@@ -186,7 +186,7 @@ function AllProductsPage() {
   if (isLoading) {
     return (
       <section>
-        <p>Loading...</p>
+        <p>Loading....</p>
       </section>
     );
   }
