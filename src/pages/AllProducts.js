@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { auth, storage, db } from "../firebase";
 import { ref as Ref, push} from "firebase/database";
-import { ref , uploadBytesResumable, getDownloadURL, getStorage,deleteObject } from "firebase/storage";
+import { ref , uploadBytesResumable, getDownloadURL, getStorage, deleteObject } from "firebase/storage";
 
 import ProductList from "../components/products/ProductList";
 import Backdrop from "../components/layout/Backdrop";
@@ -47,17 +47,13 @@ function AllProductsPage() {
     });
   }, [reload]);
 
-  function DeleteProduct(productId, imageURLRef) {
+  function DeleteProduct(productId, imageURL) {
     const storage = getStorage();
-    const desertRef = ref(storage, imageURLRef);
+    const desertRef = ref(storage, imageURL);
 
     deleteObject(desertRef)
-      .then(() => {
-        // File deleted successfully
-      })
-      .catch((error) => {
-        // Uh-oh, an error occurred!
-      });
+      .then(() => {})
+      .catch((error) => {});
 
     auth.currentUser
       .getIdToken(true)
