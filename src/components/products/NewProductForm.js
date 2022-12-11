@@ -1,4 +1,4 @@
-import { useRef, useState, useCallback } from "react";
+import { useRef, useCallback } from "react";
 import Dropzone from "../DropZone";
 
 import Card from "../ui/Card";
@@ -10,35 +10,40 @@ function NewProductForm(props) {
   const salePriceInputRef = useRef();
   const quantityInputRef = useRef();
   const descriptionInputRef = useRef();
-  const [images, setImages] = useState([]);
+  const droppedFileRef = useRef();
+  const imageURLRef = useRef();
+  imageURLRef.current = props.image
 
   function submitHandler(event) {
     event.preventDefault();
 
     const enteredName = nameInputRef.current.value;
-    const imageURL = onDrop();
-    console.log({ imageURL });
     const enteredPurchasePrice = purchasePriceInputRef.current.value;
     const enteredSalePrice = salePriceInputRef.current.value;
     const enteredQuantity = quantityInputRef.current.value;
     const enteredDescription = descriptionInputRef.current.value;
+    const droppedFile = droppedFileRef.current;
 
     const productData = {
       name: enteredName,
-      image: imageURL,
       purchasePrice: enteredPurchasePrice,
       salePrice: enteredSalePrice,
       quantity: enteredQuantity,
       description: enteredDescription,
     };
 
-    props.updateForm(productData, props.id, props.method);
+    props.updateForm(
+      productData,
+      props.id,
+      props.method,
+      droppedFile,
+      imageURLRef
+    );
     props.onClose();
   }
 
-  const onDrop = useCallback((acceptedFiles) => {
-    // upload file
-    // return url
+  const onDrop = useCallback((acceptedFile) => {
+    droppedFileRef.current = acceptedFile;
   }, []);
 
   return (

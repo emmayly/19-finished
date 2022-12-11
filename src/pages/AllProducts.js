@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
-import { auth } from "../firebase";
+import { auth, storage, db } from "../firebase";
+import { ref as Ref, push} from "firebase/database";
+import { ref , uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 import ProductList from "../components/products/ProductList";
 import Backdrop from "../components/layout/Backdrop";
@@ -84,24 +86,94 @@ function AllProductsPage() {
       });
   }
 
-  function updateForm(productData, productId, updateMethod) {
-    auth.currentUser
-      .getIdToken(true)
-      .then((idToken) => {
-        fetch(
-          `https://retail-management-ccd0b-default-rtdb.firebaseio.com//products/${productId}.json?auth=${idToken}`,
-          {
-            method: updateMethod,
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(productData),
+  function updateForm(
+    productData,
+    productId,
+    updateMethod,
+    acceptedFile,
+    imageURLRef
+  ) {
+    var tempId = productId;
+    if (productId === "") {
+      const postsRef = Ref(db, "products");
+      tempId = push(postsRef).key;
+    }
+
+    if (acceptedFile) {
+      const file = acceptedFile[0];
+      const storageRef = ref(storage, `/files/${tempId}`);
+      const uploadTask = uploadBytesResumable(storageRef, file);
+
+      setIsLoading(true);
+      // upload image to firebase storage
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log("Upload is " + progress + "% done");
+          if (snapshot.bytesTransferred === snapshot.totalBytes) {
           }
-        );
-      })
-      .then(() => {
-        setReload(!reload);
-      });
+        },
+        (error) => {
+          console.warn(error);
+        },
+        () => {
+          // then get the URL for the image
+          getDownloadURL(uploadTask.snapshot.ref)
+            .then((downloadURL) => {
+              imageURLRef.current = downloadURL;
+            })
+            .then(() => {
+              // then add the URL to firebase database
+              auth.currentUser
+                .getIdToken(true)
+                .then((idToken) => {
+                  console.log(imageURLRef.current);
+                  fetch(
+                    `https://retail-management-ccd0b-default-rtdb.firebaseio.com//products/${productId}.json?auth=${idToken}`,
+                    {
+                      method: updateMethod,
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
+                      body: JSON.stringify({
+                        ...productData,
+                        image: imageURLRef.current,
+                      }),
+                    }
+                  );
+                })
+                .then(() => {
+                  setReload(!reload);
+                });
+            });
+        }
+      );
+    }
+    else {
+      auth.currentUser
+        .getIdToken(true)
+        .then((idToken) => {
+          console.log(imageURLRef.current);
+          fetch(
+            `https://retail-management-ccd0b-default-rtdb.firebaseio.com//products/${productId}.json?auth=${idToken}`,
+            {
+              method: updateMethod,
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                ...productData,
+                image: imageURLRef.current,
+              }),
+            }
+          );
+        })
+        .then(() => {
+          setReload(!reload);
+        });
+    }
   }
 
   if (isLoading) {
@@ -116,7 +188,9 @@ function AllProductsPage() {
     <section>
       <div className={classes.title}>
         <h1>Available Products</h1>
-        <button onClick={showAddNewHandler} className={classes.addButton}>+</button>
+        <button onClick={showAddNewHandler} className={classes.addButton}>
+          +
+        </button>
       </div>
       <div>
         {addNew && <Backdrop onClick={closeAddNewHandler} />}
