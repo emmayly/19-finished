@@ -78,6 +78,7 @@ function ProductItem(props) {
           onClose={closePopupHandler}
           onDelete={props.onDelete}
           productId={props.id}
+          imageURLref={ props.image }
         />
       )}
       {onEdit && (

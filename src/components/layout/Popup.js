@@ -13,7 +13,7 @@ function Popup(props) {
       <button
         className={classes.btn}
         onClick={() => {
-          props.onDelete(props.productId);
+          props.onDelete(props.productId, props.imageURLref);
           props.onClose();
         }}
       >
