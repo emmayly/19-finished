@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 import Popup from "../layout/Popup";
 import Backdrop from "../layout/Backdrop";
@@ -10,6 +10,9 @@ import classes from "./ProductItem.module.css";
 function ProductItem(props) {
   const [showPopup, setShowPopup] = useState();
   const [onEdit, setOnEdit] = useState();
+
+  const scrollPosRef = useRef();
+
   function showPopupHandler(productId) {
     setShowPopup(true);
   }
@@ -17,13 +20,14 @@ function ProductItem(props) {
     setShowPopup(false);
   }
   function showEditHandler(productId) {
+    scrollPosRef.current = window.pageYOffset;
     setOnEdit(true);
     window.scrollTo(0,0);
   }
   function closeEditHandler(productId) {
     setOnEdit(false);
+    window.scrollTo(0, scrollPosRef.current);
   }
-
 
   var currentQuantity = Number(props.quantity);
 

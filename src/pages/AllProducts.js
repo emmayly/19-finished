@@ -49,11 +49,13 @@ function AllProductsPage() {
 
   function DeleteProduct(productId, imageURL) {
     const storage = getStorage();
-    const desertRef = ref(storage, imageURL);
 
-    deleteObject(desertRef)
-      .then(() => {})
-      .catch((error) => {});
+    if (imageURL) {
+      const desertRef = ref(storage, imageURL);
+      deleteObject(desertRef)
+        .then(() => { })
+        .catch((error) => { });
+    }
 
     auth.currentUser
       .getIdToken(true)
@@ -186,7 +188,7 @@ function AllProductsPage() {
   if (isLoading) {
     return (
       <section>
-        <p>Loading....</p>
+        <p>Loading...</p>
       </section>
     );
   }
