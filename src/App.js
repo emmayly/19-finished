@@ -7,7 +7,7 @@ import AllProductsPage from "./pages/AllProducts";
 function App() {
   return (
     <Switch>
-      <Route path="/retail-management" exact>
+      <Route path="/" exact>
         <WelcomePage />
       </Route>
       <Layout>

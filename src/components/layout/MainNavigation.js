@@ -10,7 +10,7 @@ function MainNavigation() {
   const SignOutHandler = () => {
     signOut(auth)
       .then(() => {
-        history.replace("/retail-management");
+        history.replace("/");
       })
       .catch((err) => {
         alert(err.message);
