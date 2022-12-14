@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { auth, storage, db } from "../firebase";
 import { ref as Ref, push} from "firebase/database";
 import { ref , uploadBytesResumable, getDownloadURL, getStorage, deleteObject } from "firebase/storage";
@@ -13,6 +14,9 @@ function AllProductsPage() {
   const [loadedProducts, setLoadedProducts] = useState([]);
   const [reload, setReload] = useState(true);
   const [addNew, setAddNew] = useState();
+
+  const history = useHistory();
+
   function showAddNewHandler(productId) {
     setAddNew(true);
   }
@@ -22,29 +26,34 @@ function AllProductsPage() {
 
   useEffect(() => {
     setIsLoading(true);
-    auth.currentUser.getIdToken(true).then((idToken) => {
-      fetch(
-        `https://retail-management-ccd0b-default-rtdb.firebaseio.com//products.json?auth=${idToken}`
-      )
-        .then((response) => {
-          return response.json();
-        })
-        .then((data) => {
-          const products = [];
+    if (!auth.currentUser) {
+      history.replace("/");
+    }
+    else {
+      auth.currentUser.getIdToken(true).then((idToken) => {
+        fetch(
+          `https://retail-management-ccd0b-default-rtdb.firebaseio.com//products.json?auth=${idToken}`
+        )
+          .then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            const products = [];
 
-          for (const key in data) {
-            const product = {
-              id: key,
-              ...data[key],
-            };
+            for (const key in data) {
+              const product = {
+                id: key,
+                ...data[key],
+              };
 
-            products.push(product);
-          }
+              products.push(product);
+            }
 
-          setIsLoading(false);
-          setLoadedProducts(products);
-        });
-    });
+            setIsLoading(false);
+            setLoadedProducts(products);
+          });
+      });
+    }
   }, [reload]);
 
   function DeleteProduct(productId, imageURL) {
