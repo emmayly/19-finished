@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/retail-management/static/css/main.fdbae91e.css",
-    "main.js": "/retail-management/static/js/main.4f1c5ee0.js",
+    "main.css": "/retail-management/static/css/main.be02196c.css",
+    "main.js": "/retail-management/static/js/main.b2efdcf2.js",
     "index.html": "/retail-management/index.html",
-    "main.fdbae91e.css.map": "/retail-management/static/css/main.fdbae91e.css.map",
-    "main.4f1c5ee0.js.map": "/retail-management/static/js/main.4f1c5ee0.js.map"
+    "main.be02196c.css.map": "/retail-management/static/css/main.be02196c.css.map",
+    "main.b2efdcf2.js.map": "/retail-management/static/js/main.b2efdcf2.js.map"
   },
   "entrypoints": [
-    "static/css/main.fdbae91e.css",
-    "static/js/main.4f1c5ee0.js"
+    "static/css/main.be02196c.css",
+    "static/js/main.b2efdcf2.js"
   ]
 }
